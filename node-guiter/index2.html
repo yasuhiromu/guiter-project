@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音声分析2</title>
+    <link rel="stylesheet" href="main2.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+</head>
+<body>
+    <canvas id="canvas" width="600" height="400"></canvas>
+    <div>Teachable Machine Audio Model</div>
+<button type="button" onclick="init()">Start</button>
+<div id="label-container"></div>
+<button class="C-code" type="button" onclick="guiterC()">Cコード</button>
+<button class="Cm-code" type="button" onclick="guiterCm()">Cmコード</button>
+<button class="clear" type="button" onclick="clear12()">クリア</button>
+
+<h1 id = "text"></h1>
+<h1 id = "ok"></h1>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands@0.4.0/dist/speech-commands.min.js"></script>
+
+<script type="text/javascript">
+
+var list = [];
+var listname = [];
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    async function black(){
+        ctx.fillRect(50,150,500,100),ctx.clearRect(60, 160, 30, 2),ctx.clearRect(100, 160, 30, 2),ctx.clearRect(140, 160, 30, 2),
+        ctx.clearRect(180, 160, 30, 2),ctx.clearRect(220, 160, 30, 2),ctx.clearRect(260, 160, 30, 2),ctx.clearRect(300, 160, 30, 2),
+        ctx.clearRect(340, 160, 30, 2),ctx.clearRect(380, 160, 30, 2),ctx.clearRect(420, 160, 30, 2),ctx.clearRect(460, 160, 30, 2),
+        ctx.clearRect(500, 160, 30, 2);
+        ctx.clearRect(60, 175, 30, 2),ctx.clearRect(100, 175, 30, 2),ctx.clearRect(140, 175, 30, 2),ctx.clearRect(180, 175, 30, 2),
+        ctx.clearRect(220, 175, 30, 2),ctx.clearRect(260, 175, 30, 2),ctx.clearRect(300, 175, 30, 2),ctx.clearRect(340, 175, 30, 2),
+        ctx.clearRect(380, 175, 30, 2),ctx.clearRect(420, 175, 30, 2),ctx.clearRect(460, 175, 30, 2),ctx.clearRect(500, 175, 30, 2);
+        ctx.clearRect(60, 190, 30, 2),ctx.clearRect(100, 190, 30, 2),ctx.clearRect(140, 190, 30, 2),ctx.clearRect(180, 190, 30, 2),
+        ctx.clearRect(220, 190, 30, 2),ctx.clearRect(260, 190, 30, 2),ctx.clearRect(300, 190, 30, 2),ctx.clearRect(340, 190, 30, 2),
+        ctx.clearRect(380, 190, 30, 2),ctx.clearRect(420, 190, 30, 2),ctx.clearRect(460, 190, 30, 2),ctx.clearRect(500, 190, 30, 2);
+        ctx.clearRect(60, 205, 30, 2),ctx.clearRect(100, 205, 30, 2),ctx.clearRect(140, 205, 30, 2),ctx.clearRect(180, 205, 30, 2),
+        ctx.clearRect(220, 205, 30, 2),ctx.clearRect(260, 205, 30, 2),ctx.clearRect(300, 205, 30, 2),ctx.clearRect(340, 205, 30, 2),
+        ctx.clearRect(380, 205, 30, 2),ctx.clearRect(420, 205, 30, 2),ctx.clearRect(460, 205, 30, 2),ctx.clearRect(500, 205, 30, 2);
+        ctx.clearRect(60, 220, 30, 2),ctx.clearRect(100, 220, 30, 2),ctx.clearRect(140, 220, 30, 2),ctx.clearRect(180, 220, 30, 2),
+        ctx.clearRect(220, 220, 30, 2),ctx.clearRect(260, 220, 30, 2),ctx.clearRect(300, 220, 30, 2),ctx.clearRect(340, 220, 30, 2),
+        ctx.clearRect(380, 220, 30, 2),ctx.clearRect(420, 220, 30, 2),ctx.clearRect(460, 220, 30, 2),ctx.clearRect(500, 220, 30, 2);
+        ctx.clearRect(60, 235, 30, 2),ctx.clearRect(100, 235, 30, 2),ctx.clearRect(140, 235, 30, 2),ctx.clearRect(180, 235, 30, 2),
+        ctx.clearRect(220, 235, 30, 2),ctx.clearRect(260, 235, 30, 2),ctx.clearRect(300, 235, 30, 2),ctx.clearRect(340, 235, 30, 2),
+        ctx.clearRect(380, 235, 30, 2),ctx.clearRect(420, 235, 30, 2),ctx.clearRect(460, 235, 30, 2),ctx.clearRect(500, 235, 30, 2);
+    }
+//------------------------------------------------------------------------------------------------------------------------------------------------
+//クリア完成
+    async function clear12(){
+        black();
+        list.splice(0);
+        listname.splice(0);
+        console.log(list);
+        console.log(listname);
+        var str = listname;
+        document.getElementById("text").innerHTML = str;
+    }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+//ギターネック図
+    ctx.fillRect(50,150,500,100),ctx.clearRect(60, 160, 30, 2),ctx.clearRect(100, 160, 30, 2),ctx.clearRect(140, 160, 30, 2),
+    ctx.clearRect(180, 160, 30, 2),ctx.clearRect(220, 160, 30, 2),ctx.clearRect(260, 160, 30, 2),ctx.clearRect(300, 160, 30, 2),
+    ctx.clearRect(340, 160, 30, 2),ctx.clearRect(380, 160, 30, 2),ctx.clearRect(420, 160, 30, 2),ctx.clearRect(460, 160, 30, 2),
+    ctx.clearRect(500, 160, 30, 2);
+    ctx.clearRect(60, 175, 30, 2),ctx.clearRect(100, 175, 30, 2),ctx.clearRect(140, 175, 30, 2),ctx.clearRect(180, 175, 30, 2),
+    ctx.clearRect(220, 175, 30, 2),ctx.clearRect(260, 175, 30, 2),ctx.clearRect(300, 175, 30, 2),ctx.clearRect(340, 175, 30, 2),
+    ctx.clearRect(380, 175, 30, 2),ctx.clearRect(420, 175, 30, 2),ctx.clearRect(460, 175, 30, 2),ctx.clearRect(500, 175, 30, 2);
+    ctx.clearRect(60, 190, 30, 2),ctx.clearRect(100, 190, 30, 2),ctx.clearRect(140, 190, 30, 2),ctx.clearRect(180, 190, 30, 2),
+    ctx.clearRect(220, 190, 30, 2),ctx.clearRect(260, 190, 30, 2),ctx.clearRect(300, 190, 30, 2),ctx.clearRect(340, 190, 30, 2),
+    ctx.clearRect(380, 190, 30, 2),ctx.clearRect(420, 190, 30, 2),ctx.clearRect(460, 190, 30, 2),ctx.clearRect(500, 190, 30, 2);
+    ctx.clearRect(60, 205, 30, 2),ctx.clearRect(100, 205, 30, 2),ctx.clearRect(140, 205, 30, 2),ctx.clearRect(180, 205, 30, 2),
+    ctx.clearRect(220, 205, 30, 2),ctx.clearRect(260, 205, 30, 2),ctx.clearRect(300, 205, 30, 2),ctx.clearRect(340, 205, 30, 2),
+    ctx.clearRect(380, 205, 30, 2),ctx.clearRect(420, 205, 30, 2),ctx.clearRect(460, 205, 30, 2),ctx.clearRect(500, 205, 30, 2);
+    ctx.clearRect(60, 220, 30, 2),ctx.clearRect(100, 220, 30, 2),ctx.clearRect(140, 220, 30, 2),ctx.clearRect(180, 220, 30, 2),
+    ctx.clearRect(220, 220, 30, 2),ctx.clearRect(260, 220, 30, 2),ctx.clearRect(300, 220, 30, 2),ctx.clearRect(340, 220, 30, 2),
+    ctx.clearRect(380, 220, 30, 2),ctx.clearRect(420, 220, 30, 2),ctx.clearRect(460, 220, 30, 2),ctx.clearRect(500, 220, 30, 2);
+    ctx.clearRect(60, 235, 30, 2),ctx.clearRect(100, 235, 30, 2),ctx.clearRect(140, 235, 30, 2),ctx.clearRect(180, 235, 30, 2),
+    ctx.clearRect(220, 235, 30, 2),ctx.clearRect(260, 235, 30, 2),ctx.clearRect(300, 235, 30, 2),ctx.clearRect(340, 235, 30, 2),
+    ctx.clearRect(380, 235, 30, 2),ctx.clearRect(420, 235, 30, 2),ctx.clearRect(460, 235, 30, 2),ctx.clearRect(500, 235, 30, 2);
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+//Cコード
+    
+    async function guiterC() {
+        black();
+        listname.splice(0)
+        ctx.clearRect(70,172,9,9),ctx.clearRect(110,202,9,9),ctx.clearRect(150,217,9,9);
+        listname.push("Cコード");
+        var str = listname;
+        document.getElementById("text").innerHTML = str;
+    }
+//Cmコード------------------------------------------------------------------------------------------
+
+    async function guiterCm() {
+        black();
+        listname.splice(0)
+        ctx.clearRect(30,172,9,9),ctx.clearRect(140,202,9,9),ctx.clearRect(180,217,9,9);
+        listname.push("Cmコード");
+        var str = listname;
+        document.getElementById("text").innerHTML = str;
+    }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------    
+
+    // more documentation available at
+    // https://github.com/tensorflow/tfjs-models/tree/master/speech-commands
+
+    // the link to your model provided by Teachable Machine export panel
+    const URL = "https://teachablemachine.withgoogle.com/models/iiNJQajul/";
+
+    async function createModel() {
+        const checkpointURL = URL + "model.json"; // model topology
+        const metadataURL = URL + "metadata.json"; // model metadata
+
+        const recognizer = speechCommands.create(
+            "BROWSER_FFT", // fourier transform type, not useful to change
+            undefined, // speech commands vocabulary feature, not useful for your models
+            checkpointURL,
+            metadataURL);
+
+        // check that model and metadata are loaded via HTTPS requests.
+        await recognizer.ensureModelLoaded();
+
+        return recognizer;
+    }
+    async function init() {
+        const recognizer = await createModel();
+        const classLabels = recognizer.wordLabels(); // get class labels
+        const labelContainer = document.getElementById("label-container");
+        for (let i = 0; i < classLabels.length; i++) {
+            labelContainer.appendChild(document.createElement("div"));
+        }
+
+        // listen() takes two arguments:
+        // 1. A callback function that is invoked anytime a word is recognized.
+        // 2. A configuration object with adjustable fields
+        recognizer.listen(result => {
+            const scores = result.scores; // probability of prediction for each class
+            // render the probability scores per class
+            
+            for (let i = 0; i < classLabels.length; i++) {
+                if (result.scores[i]<=0.9) {
+                    console.log("false");
+                }else{
+                    const classPrediction = classLabels[i] + ": " + result.scores[i].toFixed(2);
+                    labelContainer.childNodes[i].innerHTML = classPrediction;
+                    if(classLabels[i]=="C"){
+                        document.getElementById("ok").innerHTML = "C合っています!";
+                        black();
+                    }else if(classLabels[i]=="Cm"){
+                        document.getElementById("ok").innerHTML = "Cm合っています!";
+                        black();
+                    }
+                }
+                
+            }
+            console.log(result.scores[2]);
+        }, {
+            includeSpectrogram: true, // in case listen should return result.spectrogram
+            probabilityThreshold: 0.75,
+            invokeCallbackOnNoiseAndUnknown: true,
+            overlapFactor: 0.50 // probably want between 0.5 and 0.75. More info in README
+        });
+
+        // Stop the recognition in 5 seconds.
+        // setTimeout(() => recognizer.stopListening(), 5000);
+    }
+</script>
+</body>
+</html>
