@@ -6,23 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>音声分析</title>
     <link rel="stylesheet" href="main.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
 </head>
 <body>
-    <canvas id="canvas" width="600" height="400"></canvas>
-    <div>Teachable Machine Audio Model</div>
-<button type="button" onclick="init()">Start</button>
-<div id="label-container"></div>
+<header>
+    <h1 id="maru">➀</h1>
+</header>
+
+<canvas id="canvas" width="600" height="400"></canvas>
+<h1 id="tu">使い方</h1>
+<h3>
+    弾きたいコードをボタンから入力してください。<br>
+    入力されたコードはボタンの下に表示されます。<br>
+    表示してあるコードは実行ボタンを押すことで、左から順番に4拍子でギター盤に表示されます。<br>
+    削除ボタンはこれまで入力したコードを消すことができます。<br>
+    確認ボタンはボタン下に表示されている最初のコードをギター盤で確認することができます。
+</h3>
+
+<br clear="left">
+<h1></h1>
 <button class="C-code" type="button" onclick="guiterC()">Cコード</button>
 <button class="Cm-code" type="button" onclick="guiterCm()">Cmコード</button>
+<button class="D-code" type="button" onclick="guiterD()">Dコード</button>
+<button class="E-code" type="button" onclick="guiterE()">Eコード</button>
+<button class="G-code" type="button" onclick="guiterG()">Gコード</button>
+<button class="A-code" type="button" onclick="guiterA()">Aコード</button>
 <button id="btn" type="button" value="click">実行</button>
-<button class="clear" type="button" onclick="clear12()">クリア</button>
+<button class="clear" type="button" onclick="clear12()">削除</button>
+<button id="zero" type="button" value="click">確認</button>
+<button onclick="location.href='./index2.html'">チューニングしにいく</button>
 
 <h1 id = "text"></h1>
-
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands@0.4.0/dist/speech-commands.min.js"></script>
 
 <script type="text/javascript">
 
@@ -64,7 +77,24 @@ var listname = [];
         var str = listname;
         document.getElementById("text").innerHTML = str;
     }
+//------------------------------------------------------------------------------------------------------------------------------------------------
+//文字表示
 
+    function draw() {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        ctx.font = '20px serif';
+        ctx.fillText(1, 70, 270),ctx.fillText(2, 110, 270),ctx.fillText(3, 150, 270),
+        ctx.fillText(4, 190, 270),ctx.fillText(5,230, 270),ctx.fillText(6, 270, 270),
+        ctx.fillText(7, 310, 270),ctx.fillText(8, 350, 270),ctx.fillText(9, 390, 270),
+        ctx.fillText(10, 425, 270),ctx.fillText(11, 465, 270),ctx.fillText(12, 505, 270);        
+    }
+    draw()
+    function draw1() {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        ctx.font = '48px serif';
+        ctx.fillText('guiter assist', 170, 85);        
+    }
+    draw1()
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 //ギターネック図
     ctx.fillRect(50,150,500,100),ctx.clearRect(60, 160, 30, 2),ctx.clearRect(100, 160, 30, 2),ctx.clearRect(140, 160, 30, 2),
@@ -105,7 +135,7 @@ var listname = [];
 //Cmコード------------------------------------------------------------------------------------------
 
     async function guiterCm() {
-        list.push([30,172,9,9],[140,202,9,9],[180,217,9,9]);
+        list.push([350,156,9,86],[430,202,9,9],[430,217,9,9]);
         // for (let i = 0; i <= 2; i++) {
         //         ctx.clearRect(list[i][0],list[i][1],list[i][2],list[i][3]);
         // }
@@ -114,100 +144,83 @@ var listname = [];
         document.getElementById("text").innerHTML = str;
     }
 
+//Dコード------------------------------------------------------------------------------------------
+
+    async function guiterD() {
+        list.push([110,156,9,9],[110,187,9,9],[150,172,9,9]);
+        // for (let i = 0; i <= 2; i++) {
+        //         ctx.clearRect(list[i][0],list[i][1],list[i][2],list[i][3]);
+        // }
+        listname.push("Dコード");
+        var str = listname;
+        document.getElementById("text").innerHTML = str;
+    }
+
+//Eコード------------------------------------------------------------------------------------------
+
+    async function guiterE() {
+        list.push([110,217,9,9],[70,187,9,9],[110,202,9,9]);
+        // for (let i = 0; i <= 2; i++) {
+        //         ctx.clearRect(list[i][0],list[i][1],list[i][2],list[i][3]);
+        // }
+        listname.push("Eコード");
+        var str = listname;
+        document.getElementById("text").innerHTML = str;
+    }
+
+//Gコード------------------------------------------------------------------------------------------
+
+    async function guiterG() {
+        list.push([110,217,9,9],[150,157,9,9],[150,232,9,9]);
+        // for (let i = 0; i <= 2; i++) {
+        //         ctx.clearRect(list[i][0],list[i][1],list[i][2],list[i][3]);
+        // }
+        listname.push("Gコード");
+        var str = listname;
+        document.getElementById("text").innerHTML = str;
+    }
+    
+//Aコード------------------------------------------------------------------------------------------
+
+    async function guiterA() {
+        list.push([110,187,9,9],[110,172,9,9],[110,202,9,9]);
+        // for (let i = 0; i <= 2; i++) {
+        //         ctx.clearRect(list[i][0],list[i][1],list[i][2],list[i][3]);
+        // }
+        listname.push("Aコード");
+        var str = listname;
+        document.getElementById("text").innerHTML = str;
+    }
 //--------------------------------------------------------------------------------------------------------------------------------------------------    
 
-    let v = 2;
-    let i = 0;
-    let Timer;
     let btn = document.getElementById('btn');
     btn.addEventListener('click',function() {
+        let v = 2;
+        let i = 0;
+        let Timer;
+        black();
         Timer = setInterval(function(){
             black();
-
             for (i; i <= v; i++) {
                 ctx.clearRect(list[i][0],list[i][1],list[i][2],list[i][3]);
             }
             if(list.length==v+1){
-                    clearInterval(Timer);
+                clearInterval(Timer);
             }
             console.log(list.length)
             console.log(v+1)
             v += 3;
             
-        },5000);
+        },4000);
         
     })
-
-    // function main33() {
-    //         for (let i = 0; i <= list.length; i++) {
-    //             ctx.clearRect(list[i][0],list[i][1],list[i][2],list[i][3]);
-    //         }
-    // }
-
-    // async function clear() {
-    //     crx.clearRect();
-    // }
-
-    // more documentation available at
-    // https://github.com/tensorflow/tfjs-models/tree/master/speech-commands
-
-    // the link to your model provided by Teachable Machine export panel
-    const URL = "https://teachablemachine.withgoogle.com/models/iiNJQajul/";
-
-    async function createModel() {
-        const checkpointURL = URL + "model.json"; // model topology
-        const metadataURL = URL + "metadata.json"; // model metadata
-
-        const recognizer = speechCommands.create(
-            "BROWSER_FFT", // fourier transform type, not useful to change
-            undefined, // speech commands vocabulary feature, not useful for your models
-            checkpointURL,
-            metadataURL);
-
-        // check that model and metadata are loaded via HTTPS requests.
-        await recognizer.ensureModelLoaded();
-
-        return recognizer;
-    }
-    async function init() {
-        const recognizer = await createModel();
-        const classLabels = recognizer.wordLabels(); // get class labels
-        const labelContainer = document.getElementById("label-container");
-        for (let i = 0; i < classLabels.length; i++) {
-            labelContainer.appendChild(document.createElement("div"));
+    let zero = document.getElementById('zero');
+    zero.addEventListener('click',function() {
+        for (let p=0; p <= 2; p++) {
+                ctx.clearRect(list[p][0],list[p][1],list[p][2],list[p][3]);
         }
-
-        // listen() takes two arguments:
-        // 1. A callback function that is invoked anytime a word is recognized.
-        // 2. A configuration object with adjustable fields
-        recognizer.listen(result => {
-            const scores = result.scores; // probability of prediction for each class
-            // render the probability scores per class
-            
-            for (let i = 0; i < classLabels.length; i++) {
-                if (result.scores[i]<=0.9) {
-                    console.log("false");
-                }else{
-                    const classPrediction = classLabels[i] + ": " + result.scores[i].toFixed(2);
-                    labelContainer.childNodes[i].innerHTML = classPrediction;
-                    if(classLabels[i]=="C"){
-                        console.log("good");
-                        black();
-                    }
-                }
-                
-            }
-            console.log(result.scores[2]);
-        }, {
-            includeSpectrogram: true, // in case listen should return result.spectrogram
-            probabilityThreshold: 0.75,
-            invokeCallbackOnNoiseAndUnknown: true,
-            overlapFactor: 0.50 // probably want between 0.5 and 0.75. More info in README
-        });
-
-        // Stop the recognition in 5 seconds.
-        // setTimeout(() => recognizer.stopListening(), 5000);
-    }
+        console.log(list[0])
+    })
 </script>
 </body>
 </html>

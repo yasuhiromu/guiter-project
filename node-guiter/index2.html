@@ -11,12 +11,25 @@
 </head>
 <body>
     <canvas id="canvas" width="600" height="400"></canvas>
-    <div>Teachable Machine Audio Model</div>
+    <h1 id="tu">使い方</h1>
+    <h3>
+        自分の音が合っているか確認したいコードをボタンから入力してください。<br>
+        入力されたコードはボタンの下に表示されます。<br>
+        Startボタンを押してしばらくするとマイクの許可がでます、承認してください。<br>
+        自分の選択したコードを実際に弾いてみてください。<br>
+        選択したコードと弾いた音が合っていれば「～合っています」と文字が表示されます。<br>
+        「バックグラウンドノイズ」と文字が表示されている場合、音が合っていない可能性があります。<br>
+        削除ボタンはこれまで入力したコードを消すことができます。<br>
+        確認ボタンはボタン下に表示されている最初のコードをギター盤で確認することができます。
+    </h3>
+    <br clear="left">
+    <div>音のチェックをします、コードを選択してStartボタンを押してください</div>
 <button type="button" onclick="init()">Start</button>
 <div id="label-container"></div>
 <button class="C-code" type="button" onclick="guiterC()">Cコード</button>
 <button class="Cm-code" type="button" onclick="guiterCm()">Cmコード</button>
-<button class="clear" type="button" onclick="clear12()">クリア</button>
+<button class="clear" type="button" onclick="clear12()">削除</button>
+<button onclick="location.href='./index.html'">前のページに戻る</button>
 
 <h1 id = "text"></h1>
 <h1 id = "ok"></h1>
@@ -108,6 +121,25 @@ var listname = [];
         var str = listname;
         document.getElementById("text").innerHTML = str;
     }
+
+//------------------------------------------------------------------------------------------------------------------------------------------------
+//文字表示
+
+    function draw() {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        ctx.font = '20px serif';
+        ctx.fillText(1, 70, 270),ctx.fillText(2, 110, 270),ctx.fillText(3, 150, 270),
+        ctx.fillText(4, 190, 270),ctx.fillText(5,230, 270),ctx.fillText(6, 270, 270),
+        ctx.fillText(7, 310, 270),ctx.fillText(8, 350, 270),ctx.fillText(9, 390, 270),
+        ctx.fillText(10, 425, 270),ctx.fillText(11, 465, 270),ctx.fillText(12, 505, 270);        
+    }
+    draw()
+    function draw1() {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        ctx.font = '48px serif';
+        ctx.fillText('guiter assist', 170, 85);        
+    }
+    draw1()
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------    
 
